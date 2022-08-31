@@ -1,3 +1,4 @@
+# https://www.codewars.com/kata/5f25f475420f1b002412bb1f/train/python
 series = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
 id = 1
 def find_the_number_plate(customer_id):
