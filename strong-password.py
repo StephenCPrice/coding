@@ -11,19 +11,4 @@ def password_checker(passs):                                                    
         print('Your password is sufficiently strong.')
     else: 
         print('Your password is not strong enough.')
-    
-'''
-    def capital_checker(letter):
-	    password_checked= re.compile(r'[A-Z]?')
-	    spam = password_checked.search(letter)
-	    cap_result.append(spam)
-
-    for i in range(len(passs)):
-        capital_checker(passs[i])
-        #num_result.append(num_checker([i]))
-    if len(cap_result) >= 1:
-        print(True)
-    else:
-        print(False)
-'''
 password_checker(password)
