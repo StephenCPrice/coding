@@ -1,4 +1,5 @@
 '''Regex Version of the strip() Method
+
 Write a function that takes a string and does the same thing 
 as the strip() string method. If no other arguments are passed 
 other than the string to strip, then whitespace characters will 
