@@ -9,9 +9,20 @@ will be removed from the string.'''
 
 import re
 print(f'what text would you like to be stripped from?')
-user_text= input()
+user_text = input()
 print(f'What character would you like to strip from the text?')
 stripped_char = input()
-def regex_strip(text, charr): 
-    print(re.sub(charr, '', text, flags=re.I))
-regex_strip(user_text, stripped_char)
+def regex_strip(text, charr):                           #"strips" the charr from left to right, and stops when it gets to a charr that isn't supposed to be stripped.
+    lol = []                                            #function runs again after being reversed, and finally it is reversed again and then printed for the user.
+    ambiguously_done = []
+    for i in range(len(text)):
+        if text[i] == charr:
+            lol.append(re.sub(charr, '', text[i], flags=re.I))
+        if text[i] != charr:
+            lol.append(text[i:])
+            ambiguously_done = (''.join(lol))
+            break
+    return ambiguously_done
+reversed_user_text =  (regex_strip(user_text, stripped_char))[::-1]  
+reversed_and_stripped = (regex_strip(str(reversed_user_text), stripped_char))[::-1]
+print(rf'Your result is: {reversed_and_stripped}')
