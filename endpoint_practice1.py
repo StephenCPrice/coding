@@ -23,9 +23,10 @@ def catch():
     except:
             return flask.abort(404)                             
     new_file = json_path + '/' + changed_file
-
-    shutil.move(correct_file, new_file)           #Changes file name to newfile. 
-
+    try:
+        shutil.move(correct_file, new_file)           #Changes file name to newfile. 
+    except:
+        return flask.abort(404)
     return new_file                               
 
 app.run()
