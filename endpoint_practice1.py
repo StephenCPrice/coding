@@ -1,26 +1,30 @@
-import flask, os, json, shutil
-from pathlib import Path
-app = flask.Flask(__name__, static_folder='static')
-app.config["DEBUG"] = True
-@app.route('/', methods=['GET'])
+import json
+import os
+import shutil
+import flask
 
+from pathlib import Path
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
+
+@app.route('/', methods=['GET'])
 def catch():
-    changed_file = 'myfile.json'          #changing to the same file name, so I don't have to keep going back and changing it every time to test it.
+    changed_file = 'myfile.json'          #change to the same file name, so I don't have to keep going back and changing it every time to test it.
     json_path = '/home/stephen/repos/coding/static'         
     try:            
-        for i, x in enumerate(os.listdir(json_path)):       
-            y = Path(x)  #Path object 
+        for file in os.listdir(json_path):       
+            y = Path(file) 
             if y.suffix == '.json': 
-                y = os.path.basename(y)                     
-                correct_file = json_path + '/' + y          
+                y = os.path.basename(y)                
+                correct_file = json_path + '/' + y     
                 break
-            elif x == (os.listdir(json_path))[-1] and y.suffix != '.json' : 
+            elif file == (os.listdir(json_path))[-1]: 
                 return flask.abort(404)
     except:
-        return flask.abort(404)                             
+            return flask.abort(404)                             
     new_file = json_path + '/' + changed_file
 
-    shutil.move(correct_file, new_file)           #Changes file name to newfile while keeping the same file path. 
+    shutil.move(correct_file, new_file)           #Changes file name to newfile. 
 
     return new_file                               
 
