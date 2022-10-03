@@ -1,32 +1,39 @@
 import json
-import os
-import shutil
-import flask
+import os 
+import shutil 
+import flask 
 
-from pathlib import Path
+from pathlib import Path 
+from flask import Flask, request 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 @app.route('/', methods=['GET'])
 def catch():
-    changed_file = 'myfile.json'          #change to the same file name, so I don't have to keep going back and changing it every time to test it.
-    json_path = '/home/stephen/repos/coding/static'         
+    json_path = './static'
+    queried_file = request.args.get('file') #?file=myfile.json
+    changed_file = 'myfile.json'   #same file for obv reasons     
     try:            
-        for file in os.listdir(json_path):       
-            y = Path(file) 
-            if y.suffix == '.json': 
-                y = os.path.basename(y)                
-                correct_file = json_path + '/' + y     
+        for file in os.listdir(json_path): 
+            print(file, queried_file)      
+            if file == queried_file: 
+                print(True)
+                correct_file = json_path + '/' + file       
                 break
-            elif file == (os.listdir(json_path))[-1]: 
+            elif file == (os.listdir(json_path))[-1]: #If at the final iteration of the loop, and it is not a json file return a 404 error.
                 return flask.abort(404)
     except:
-            return flask.abort(404)                             
-    new_file = json_path + '/' + changed_file
+        return flask.abort(404)                                         
     try:
+        new_file = json_path + '/' + changed_file
         shutil.move(correct_file, new_file)           #Changes file name to newfile. 
     except:
         return flask.abort(404)
-    return new_file                               
+# open new_file, load json, and return to client.        
+    f = open(new_file, 'r')
+    new_file = json.load(f)
+    f.close()
+
+    return new_file                   
 
 app.run()
