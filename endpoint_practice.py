@@ -12,12 +12,12 @@ app.config["DEBUG"] = True
 def catch():
     json_path = './static'
     queried_file = request.args.get('file') #?file=myfile.json
-
     try:            
-        for file in os.listdir(json_path):       
-            if file.name == queried_file: 
-                correct_file = json_path + '/' + file.name        
+        for file in os.listdir(json_path):
+            if file == queried_file: 
+                correct_file = json_path + '/' + file     
                 break
+
             elif file == (os.listdir(json_path))[-1]: #If at the final iteration of the loop, and it is not a json file return a 404 error.
                 return flask.abort(404)
     except:
@@ -29,7 +29,5 @@ def catch():
     except:
         return flask.abort(404)
 
-    back_to_the_json = json.dumps(str(json_object.items()).replace('.', ' '))
-
-    return back_to_the_json                                 
+    return json_object                                 
 app.run()
